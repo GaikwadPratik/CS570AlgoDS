@@ -1,0 +1,19 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "CommonJS",
+    "declaration":false,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "listFiles":false,
+    "noEmitOnError":true,
+    "target":"es6"
+  },
+  "files": [
+    "HelloProgram/helloProgram.ts",
+	  "HelloProgram/helloProgramCaller.ts",
+    "FolderFizzBuzz/FizzBuzz.ts",
+    "FolderFizzBuzz/FizzBuzzTester.ts"
+    ]
+}
