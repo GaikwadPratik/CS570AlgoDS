@@ -12,6 +12,6 @@
   },
   "files": [
     "helloProgram.ts",
-    "hellpProgramCaller.ts"
+    "helloProgramCaller.ts"
     ]
 }
