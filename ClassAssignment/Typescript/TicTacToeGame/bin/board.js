@@ -30,7 +30,7 @@ class Board {
             else if (index.toString().length === 2)
                 secondLine += singleSpacing;
             secondLine += (columnSpace + verticalDivier).repeat(tableSize - 1);
-            //secondLine += columnSpace;
+            secondLine += columnSpace;
             console.log(secondLine);
             if (index !== tableSize)
                 console.log(threeSpacing.concat(horizontalDivider.repeat(tableSize)));
@@ -38,3 +38,4 @@ class Board {
     }
 }
 exports.Board = Board;
+//# sourceMappingURL=board.js.map
