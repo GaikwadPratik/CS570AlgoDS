@@ -1,0 +1,13 @@
+{
+  "name": "tic-tac-toe-game",
+  "version": "0.0.0",
+  "description": "TicTacToeGame",
+  "main": "app.js",
+  "author": {
+    "name": "pratik"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.4",
+    "typescript-dotnet-umd": "^3.2.5"
+  }
+}
