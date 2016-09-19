@@ -1,6 +1,7 @@
 import Enumerable from 'typescript-dotnet-umd/System.Linq/Linq';
 let readlineSync = require('readline-sync');
 
+//class for showing user various questions and limits for answer
 export class UserInputProcessor {
 
     public static boardSize: string = "boardSize";
@@ -43,9 +44,9 @@ export class UserInputProcessor {
 
                 if (typeof (_filteredQuestion) !== 'undefined' && _filteredQuestion !== null) {
 
-                    let _questionToUser: string = _filteredQuestion.value;
-                    let _limit: any = _filteredQuestion.limit;
-                    let _limitMessage: string = _filteredQuestion.limitMessage;
+                    let _questionToUser: string = _filteredQuestion.value;//Question to be shown to user
+                    let _limit: any = _filteredQuestion.limit;// Acceptable answer check by regex or string
+                    let _limitMessage: string = _filteredQuestion.limitMessage;// incase answer is not within the limit, show the message to user.
 
                     if (_questionToUser !== '') {
 

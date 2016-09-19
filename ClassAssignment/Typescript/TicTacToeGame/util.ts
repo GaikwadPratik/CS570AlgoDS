@@ -1,10 +1,13 @@
 import * as fs from 'fs';
 
+//utility module
 export module Utility {
+    //Interface to be implemented by classes which needs to be deserialized from JSON string.
     export interface Serializable<T> {
         Deserialize(input: Object): T;
     }
 
+    //utility class
     export class Utils {
         //Need to check if below functino can be made.
         // public InitalizeArray<T>(rows: number, columns: number, initialValue: any): Array<T> {
@@ -25,6 +28,7 @@ export module Utility {
         //     return rtnArr;
         // }
 
+        //Initialize 2d array with default value
         public static Initalize2DArray<T>(numrows, numcols, initial) {
             type t = T;
             var _arr = new Array(numcols);
@@ -39,12 +43,14 @@ export module Utility {
             return _arr;
         }
 
+        //user node internal process to display message on console.
         public PrintBoardLine(stringToPrint: string, bAddNewLine: boolean = false): void {
             process.stdout.write(stringToPrint);
             if (bAddNewLine)
                 process.stdout.write('\n');
         }
 
+        //Save contents to file synchronously.
         public WriteContentsToFile<T>(fileName: string, contents: T): void {
             try {
                 let _strSerialises: string = JSON.stringify(contents);
@@ -55,9 +61,12 @@ export module Utility {
             }
         }
 
+        //Read the contents of file synchronously.
         public ReadFileContents(fileName: string): string {
             let _strRtnVal: string = '';
             try {
+
+                //TODO:: check if file exists.
                 let _fileContents: Buffer = fs.readFileSync(fileName);
                 if (typeof (_fileContents) !== 'undefined' && _fileContents !== null)
                     _strRtnVal = _fileContents.toString();

@@ -2,9 +2,10 @@ import {Utility} from './util';
 import {Enumerable} from 'typescript-dotnet-umd/System.Linq/Linq';
 import {List} from 'typescript-dotnet-umd/System/Collections/List';
 
+//Class for processing players move and game status
 export class PlayerProcessor {
-    private _playerMatrix: string[][] = [];
-    private _playerIndicators: string = 'XOABCDEFGHIJKLMNPQRSTUVWYZ';
+    private _playerMatrix: string[][] = [];//used for internal processing such as evaluation and current positions
+    private _playerIndicators: string = 'XOABCDEFGHIJKLMNPQRSTUVWYZ';//Max number of players that can play
     public playerMarkers: Array<string> = [];
     public WinningSequenceNumber: number = 0;
     public WinningSequenceCount: number = 0;
@@ -17,15 +18,18 @@ export class PlayerProcessor {
         this._playerMatrix = value;
     }
 
+    //take only n value out of 26 characters
     public InitializePlayerMarkers(numberOfPlayers): void {
         let tempPlayerIndicators: string = this._playerIndicators.substr(0, numberOfPlayers);
         this.playerMarkers = tempPlayerIndicators.split('');
     }
 
+    //initiate the player matrix for internal purpose.
     public InitializePlayerMatrix(numberOfPlayers): void {
         this._playerMatrix = Utility.Utils.Initalize2DArray(numberOfPlayers, numberOfPlayers, '');
     }
 
+    //Once the player has entered the move, update the internal matrix
     public UpdatePlayerMatrix(rowNumber: number, columnNumber: number, playerIndentifier: string): boolean {
         let _bRtnVal = false;
         try {
@@ -38,6 +42,7 @@ export class PlayerProcessor {
         return _bRtnVal;
     }
 
+    //Check if the position is filled or not.
     public CheckAvilabilityPosition(rowNumber: number, colNumber: number): boolean {
         let _bRtnVal: boolean = false;
         try {
@@ -49,6 +54,7 @@ export class PlayerProcessor {
         return _bRtnVal;
     }
 
+    //if all the positions are filled or not.
     public IsNextMovePossible(): boolean {
         let _bRtnVal: boolean = false;
         let _nMaxIteration: number = this._playerMatrix.length;
@@ -62,6 +68,7 @@ export class PlayerProcessor {
         return _bRtnVal;
     }
 
+    //Check if winning sequence is possible when entered by user at the beginning of the game.
     public CheckWinningSequencePossible(winningSequenceCount: number): boolean {
         let _bRtnVal: boolean = false;
         let _nTempSize: number = this._playerMatrix.length;
@@ -75,6 +82,7 @@ export class PlayerProcessor {
         return _bRtnVal;
     }
 
+    //Check if game is won after every move. If won, then return the player who has won it.
     public EvaluateWinningSequence(): string {
         let _bRtnVal: string = '';
         let _currentValue: Array<string> = new Array<string>();
@@ -115,29 +123,42 @@ export class PlayerProcessor {
         return _bRtnVal;
     }
 
+    //evaluate the array of sequence selected by user to check winning.
     private EvaluateArray(inputarray: Array<string>): string {
         let _bRtnVal: string = '';
-        //reduce can't be used since it can't be break when min condition is satisfied
-        //some can't be used since we need to return who has won.
-        for (let index: number = 0; index < inputarray.length; index++) {
-            let currentCheckCount: number = 1;
-            for (let innerIndex: number = index + 1; innerIndex < inputarray.length; innerIndex++) {
-                if (inputarray[index] === inputarray[innerIndex])
-                    currentCheckCount += 1;
-                else
-                    break;
-                if (currentCheckCount === this.WinningSequenceCount) {
-                    _bRtnVal = inputarray[index];
-                    break;
-                }
-            }
-            if (_bRtnVal)
-                break;
-        }
+        ////reduce can't be used since it can't be break when min condition is satisfied
+        ////some can't be used since we need to return who has won.
+        //for (let index: number = 0; index < inputarray.length; index++) {
+        //    let currentCheckCount: number = 1;
+        //    for (let innerIndex: number = index + 1; innerIndex < inputarray.length; innerIndex++) {
+        //        if (inputarray[index] === inputarray[innerIndex])
+        //            currentCheckCount += 1;
+        //        else
+        //            break;
+        //        if (currentCheckCount === this.WinningSequenceCount) {
+        //            _bRtnVal = inputarray[index];
+        //            break;
+        //        }
+        //    }
+        //    if (_bRtnVal)
+        //        break;
+        //}
 
+        //using reduce approach(Note this is waste of resources since it can't be broken.
+        let counter: number = 1;
+        let winningCount: number = this.WinningSequenceCount;
+        let result = inputarray.reduce(function (p, c, i, a) {            
+            p === c ? counter += 1 : counter = 1;            
+            if (_bRtnVal === '' && winningCount === counter)
+                _bRtnVal = c;
+            if (i === (a.length - 1))
+                return _bRtnVal;
+            return c;
+        });
         return _bRtnVal;
     }
 
+    //returns each column of the 2d matrix using higher order fn
     private GetColumnMatrix(index: number): Array<string> {
         let _rtnVal: Array<string> = new Array<string>();
         function reduction(previousValue, currentValue) {

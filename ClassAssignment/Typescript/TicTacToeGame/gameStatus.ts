@@ -1,5 +1,6 @@
 import {Utility} from './util';
 
+//Interface added because it makes JSON serialization easy.
 export interface IGameStatusProcessor {
     PlayerMatrix: Array<Array<string>>;//Contains positions played so far.
     PlayerMarker: Array<string>;//Contains order of the players. Last character should indicate last player.
@@ -8,8 +9,9 @@ export interface IGameStatusProcessor {
     BoardSize: number; //Board size(not needed could be extracted from PlayerMarker.length)
 }
 
+//Class for saving game in file. 
 export class GameStatusProcessor implements Utility.Serializable<GameStatusProcessor>, IGameStatusProcessor {
-
+    //properties which needs to be written to file
     public PlayerMatrix: string[][] = new Array<Array<string>>();//Contains positions played so far.
     public PlayerMarker: Array<string> = new Array<string>();//Contains order of the players. Last character should indicate last player.
     public WinningSequence: number = 0; //Winning Sequence directiion entered by user at the beginning.
@@ -25,9 +27,5 @@ export class GameStatusProcessor implements Utility.Serializable<GameStatusProce
         this.BoardSize = input.BoardSize;
 
         return this;
-    }
-
-    public CheckGameCondition() {
-
     }
 }

@@ -1,4 +1,4 @@
-import {Enumerable} from 'typescript-dotnet-umd/System.Linq/Linq';
+﻿import {Enumerable} from 'typescript-dotnet-umd/System.Linq/Linq';
 import {List} from 'typescript-dotnet-umd/System/Collections/List';
 import {IBoardProcessor, BoardProcessor} from './boardProcessor';
 import {UserInputProcessor} from './userInputProcessor';
@@ -6,7 +6,9 @@ import {PlayerProcessor} from './playerProcessor';
 import {Utility} from './util';
 import {IGameStatusProcessor, GameStatusProcessor} from './gameStatus';
 
+//Entry point for Game
 class Program {
+    //global variable declaration for each external modules
     private _boardProcessorObject: IBoardProcessor = null;
     private _playerProcessorObject: PlayerProcessor = null;
     private _gameStatusProcessorObject: IGameStatusProcessor = new GameStatusProcessor();
@@ -26,11 +28,14 @@ class Program {
         let _bSaveAndQuit: boolean = false;
         let lstPlayers: List<string> = null;
 
+        //Ask user if which game to start new or saved
         let _strGameStatus: string = this._userInputProcessorObject.ShowQuestionToUser(UserInputProcessor.loadOrNew);
 
+        //If user types new game
         if (_strGameStatus !== ''
             && _strGameStatus.toUpperCase() !== UserInputProcessor.quit.toUpperCase()
             && _strGameStatus.toUpperCase() === UserInputProcessor.newGame.toUpperCase()) {
+            //New Game
 
             //Get number of players
             _strNumberofPlayers = this._userInputProcessorObject.ShowQuestionToUser(UserInputProcessor.playerSize);
@@ -39,6 +44,7 @@ class Program {
                 && _strNumberofPlayers.toUpperCase() !== UserInputProcessor.quit.toUpperCase()) {
 
                 _nNumberofPlayers = parseInt(_strNumberofPlayers);
+                //Initiate player markers and save the number
                 this.ProcessUserInput(UserInputProcessor.playerSize, _strNumberofPlayers);
 
                 if (typeof (this._playerProcessorObject) !== 'undefined'
@@ -51,6 +57,7 @@ class Program {
                 if (_strBoardSize !== ''
                     && _strBoardSize.toUpperCase() !== UserInputProcessor.quit.toUpperCase()) {
                     _nBoardSize = parseInt(_strBoardSize);
+                    //Initiate the board in row by column format and generate and interal string matrix for saving player location.
                     this.ProcessUserInput(UserInputProcessor.boardSize, _strBoardSize);
 
                     //Get winning sequence
@@ -59,7 +66,7 @@ class Program {
                     if (_strWinningSequence !== ''
                         && _strWinningSequence.toUpperCase() !== UserInputProcessor.quit.toUpperCase()) {
                         _nWinningSequqnce = parseInt(_strWinningSequence);
-
+                        //store in each respective module for further processing.
                         this._gameStatusProcessorObject.WinningSequence = this._playerProcessorObject.WinningSequenceNumber = _nWinningSequqnce;
 
                         //Get winning count
@@ -68,32 +75,38 @@ class Program {
                             && _strWinningCount.toUpperCase() !== UserInputProcessor.quit.toUpperCase()) {
 
                             _nWinningCount = parseInt(_strWinningCount);
+                            //check if winning sequence is possible with the size of the board.
                             if (this._playerProcessorObject.CheckWinningSequencePossible(_nWinningCount)) {
                                 this._gameStatusProcessorObject.WinningCount = this._playerProcessorObject.WinningSequenceCount = _nWinningCount;
                                 //All the input conditions are met, show th board.
                                 this.ProcessUserInput(UserInputProcessor.showBoard, _strBoardSize);
                             }
                             else {
+                                //if winning sequence is not possible then show error and quit the game.
                                 new Utility.Utils().PrintBoardLine(`Entered winning sequence ${_nWinningCount} is not possible. Quiting the game.`, true);
                                 _bProceedWithGame = false;
                             }
                         }
                         else if (_strWinningCount !== ''
                             && _strWinningCount.toUpperCase() === UserInputProcessor.quit.toUpperCase())
+                            //in case user types 'quit'
                             _bProceedWithGame = false;
                     }
                     else if (_strWinningSequence !== ''
                         && _strWinningSequence.toUpperCase() === UserInputProcessor.quit.toUpperCase())
+                        //in case user types 'quit'
                         _bProceedWithGame = false;
                 }
                 else if (_strBoardSize !== ''
                     && _strBoardSize.toUpperCase() === UserInputProcessor.quit.toUpperCase())
+                    //in case user types 'quit'
                     _bProceedWithGame = false;
             }
             else if (_strNumberofPlayers !== ''
                 && _strNumberofPlayers.toUpperCase() === UserInputProcessor.quit.toUpperCase())
+                //in case user types 'quit'
                 _bProceedWithGame = false;
-        }
+        }//If user types load
         else if (_strGameStatus !== ''
             && _strGameStatus.toUpperCase() !== UserInputProcessor.quit.toUpperCase()
             && _strGameStatus.toUpperCase() === UserInputProcessor.load.toUpperCase()) {
@@ -109,65 +122,74 @@ class Program {
                 this._boardProcessorObject.setPlayerMatrix(this._gameStatusProcessorObject.PlayerMatrix);
                 this.ProcessUserInput(UserInputProcessor.loadOrNew, '');
             }
-            else
+            else //any error such as file not found or file reading operation failed.
                 _bProceedWithGame = false;
         }
         else {
             //quit 
             if (_strGameStatus !== ''
                 && _strGameStatus.toUpperCase() === UserInputProcessor.quit.toUpperCase()) {
+                //in case user types 'quit'
                 _bProceedWithGame = false;
             }
         }
 
+        //get the generated player markers 
         if (this._playerProcessorObject !== null
-            && typeof (this._playerProcessorObject.playerMarkers) !== 'undefined' 
-            && this._playerProcessorObject.playerMarkers !== null 
+            && typeof (this._playerProcessorObject.playerMarkers) !== 'undefined'
+            && this._playerProcessorObject.playerMarkers !== null
             && this._playerProcessorObject.playerMarkers.length > 0)
             lstPlayers = new List<string>(Enumerable.from(this._playerProcessorObject.playerMarkers));
 
+        //everything is taken from user either to load or start a game, show the board and ask for movements.
         while (_bProceedWithGame && lstPlayers !== null && lstPlayers.count > 0) {
-            //show user for whom move is requested.
+            //show next user for whom move is requested.
             let _nextUser: string = lstPlayers.get(0);
             if (typeof (_nextUser) !== 'undefined' && _nextUser !== null && _nextUser !== '') {
                 new Utility.Utils().PrintBoardLine(`player '${_nextUser}', `);
 
+                //ask for next location to be marked.
                 let _strNextMove: string = this._userInputProcessorObject.ShowQuestionToUser(UserInputProcessor.nextLocation);
 
                 if (_strNextMove !== ''
                     && _strNextMove.toUpperCase() !== UserInputProcessor.quit.toUpperCase()) {
                     _bProceedWithGame = true;
 
+                    //display message with move made
                     new Utility.Utils().PrintBoardLine(`player "${_nextUser}" has decided to mark "${_strNextMove}" location`, true);
 
                     let _strNextMoveTemp: string = `${_strNextMove} ${_nextUser}`;
 
+                    //Check if the position is valid meaning whether its empty or not, if not then show user message and ask for another position.
                     if (!this.ProcessUserInput(UserInputProcessor.nextLocation, _strNextMoveTemp))
                         new Utility.Utils().PrintBoardLine(`postion ${_strNextMove} is already filled. Please enter another position.`, true);
                     else {
+                        //if position can be filled, then move the player to last of list of Markers so that Round Robin can be maintained.
                         lstPlayers.removeAt(0);
                         lstPlayers.add(_nextUser);
 
                         //Update playerMarkers in GameStatus.
                         this._gameStatusProcessorObject.PlayerMarker = lstPlayers.toArray();
 
-                        //evaluate winning/losing
+                        //evaluate winning/losing of the game
                         let _strGameWonBy: string = this._playerProcessorObject.EvaluateWinningSequence();
                         if (_strGameWonBy === '') {
-                            //Check board if any position is left for playing.
+                            //if game is still not won by anybody, Check board if any position is left for playing.
                             if (!this._playerProcessorObject.IsNextMovePossible()) {
+                                // in case no position to play, show message for tie and quit the game.
                                 new Utility.Utils().PrintBoardLine(`No empty positions available, resulting in current game ended in tied status. Quiting the current game.`, true);
                                 _bProceedWithGame = false;
                             }
                         }
                         else {
+                            //if game is won then show the user who won it and quit the game.
                             new Utility.Utils().PrintBoardLine(`Game won by '${_strGameWonBy}'. Quiting the current game.`, true);
                             _bProceedWithGame = false;
                         }
                     }
                 }
                 else {
-                    //quit
+                    //In case user wants to quit, ask if save to be done.
                     _bProceedWithGame = false;
                     _bSaveAndQuit = true;
                 }
@@ -178,14 +200,17 @@ class Program {
             }
         }
 
-        if (!_bProceedWithGame)
+        if (!_bProceedWithGame)// in all the conditions where game has to be stopped call QuitGame.
             this.QuitGame(_bSaveAndQuit);
     }
 
+    //This function will process the user's input for various processing such as initiate board, player markers, player matrix, show board.
     private ProcessUserInput(inputTypeTobProcessed: string, userInput: string): boolean {
         let _bRtnVal: boolean = false;
         try {
             switch (inputTypeTobProcessed) {
+
+                //generate the board player matrix and set up initial variables for generating board on screen.
                 case UserInputProcessor.boardSize:
                     this._boardProcessorObject = new BoardProcessor();
                     let _boardSize: number = parseInt(userInput);
@@ -196,6 +221,7 @@ class Program {
                     _bRtnVal = true;
                     break;
 
+                //Initiate player markers based on number of players entered by user.
                 case UserInputProcessor.playerSize:
                     let _numberOfPlayers: number = parseInt(userInput);
                     this._playerProcessorObject = new PlayerProcessor();
@@ -203,11 +229,13 @@ class Program {
 
                     break;
 
+                //in case of load, show the board with already filled markers from player matrix.
                 case UserInputProcessor.loadOrNew:
                     this._boardProcessorObject.DrawBoard(true);
                     _bRtnVal = true;
                     break;
 
+                //Process location entered by user and mark it appropriately.
                 case UserInputProcessor.nextLocation:
                     let _axesInfo: Array<string> = userInput.split(' ');
                     let _playerMarker: string = _axesInfo.pop();
@@ -238,16 +266,19 @@ class Program {
                         _bRtnVal = false;
                     break;
 
+                //Show blank board without any markers
                 case UserInputProcessor.showBoard:
                     this._boardProcessorObject.DrawBoard(false);
                     _bRtnVal = true;
                     break;
 
+                //save the current game status in file name entered by user by appending json extension.
                 case UserInputProcessor.save:
                     new Utility.Utils().WriteContentsToFile<IGameStatusProcessor>(`${userInput}.json`, this._gameStatusProcessorObject);
                     _bRtnVal = true;
                     break;
 
+                //load the game from the file name entered by user by appending json extension.
                 case UserInputProcessor.load:
                     let _strFileContents: string = new Utility.Utils().ReadFileContents(`${userInput}.json`);
                     if (_strFileContents !== '') {
@@ -266,6 +297,7 @@ class Program {
         return _bRtnVal;
     }
 
+    //Quit the game
     private QuitGame(toBeSaved: boolean): void {
         //Ask user if to be saved.
         if (toBeSaved) {

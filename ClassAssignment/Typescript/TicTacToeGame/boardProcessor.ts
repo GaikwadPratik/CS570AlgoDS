@@ -7,6 +7,7 @@ export interface IBoardProcessor {
     setPlayerMatrix(value: string[][]);
 }
 
+//Class for console display processing of board
 export class BoardProcessor extends Utility.Utils implements IBoardProcessor {
     private _playerMatrix: string[][] = [];
     public tableSize: number = 0;
