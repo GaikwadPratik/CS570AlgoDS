@@ -7,10 +7,17 @@
         "sourceMap": true,
         "preserveConstEnums": true,
         "noEmitOnError": true,
-        "outDir": "bin"
+        "outDir": "bin",
+        "removeComments": true
     },
-    "files": [
-        "board.ts",
-        "program.ts"
+    "exclude": [
+        "node_modules"
     ]
+    // "files": [
+    //     "boardProcessor.ts",
+    //     "program.ts",
+    //     "util.ts",
+    //     "userInputProcessor.ts",
+    //     "playerProcessor.ts"
+    // ]
 }

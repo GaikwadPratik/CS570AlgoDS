@@ -1,0 +1,12 @@
+{
+  "name": "tictactoegame",
+  "version": "1.0.0",
+  "description": "command line version of tictactoe game",
+  "main": "bin/program.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PratikGaikwad",
+  "license": "MIT",
+  "dependencies": {}
+}
