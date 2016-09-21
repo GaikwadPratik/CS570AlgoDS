@@ -33,7 +33,6 @@ class Program {
 
         //If user types new game
         if (_strGameStatus !== ''
-            && _strGameStatus.toUpperCase() !== UserInputProcessor.quit.toUpperCase()
             && _strGameStatus.toUpperCase() === UserInputProcessor.newGame.toUpperCase()) {
             //New Game
 
