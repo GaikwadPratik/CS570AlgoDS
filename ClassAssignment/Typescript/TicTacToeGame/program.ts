@@ -33,7 +33,6 @@ class Program {
 
         //If user types new game
         if (_strGameStatus !== ''
-            && _strGameStatus.toUpperCase() !== UserInputProcessor.quit.toUpperCase()
             && _strGameStatus.toUpperCase() === UserInputProcessor.newGame.toUpperCase()) {
             //New Game
 
@@ -108,7 +107,6 @@ class Program {
                 _bProceedWithGame = false;
         }//If user types load
         else if (_strGameStatus !== ''
-            && _strGameStatus.toUpperCase() !== UserInputProcessor.quit.toUpperCase()
             && _strGameStatus.toUpperCase() === UserInputProcessor.load.toUpperCase()) {
             //load from the file
             let _filePath: string = this._userInputProcessorObject.ShowQuestionToUser(UserInputProcessor.loadPath);
