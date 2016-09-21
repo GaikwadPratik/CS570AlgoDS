@@ -29,7 +29,7 @@ export module Utility {
         // }
 
         //Initialize 2d array with default value
-        public static Initalize2DArray<T>(numrows, numcols, initial) {
+        public static Initalize2DArray<T>(numrows: number, numcols: number, initial: any) {
             type t = T;
             var _arr = new Array(numcols);
             for (var i = 0; i < numcols; ++i) {
