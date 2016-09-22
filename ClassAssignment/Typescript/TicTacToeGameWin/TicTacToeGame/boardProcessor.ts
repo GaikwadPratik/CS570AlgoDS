@@ -31,20 +31,21 @@ export class BoardProcessor extends Utility.Utils implements IBoardProcessor {
             let _horizontalDivider: string = '----';
             let _firstLine: string = '';
             let _secondLine: string = '';
+            let _horizontalLine: string = '';
 
             _firstLine += _threeSpacing;
+            _horizontalLine += _threeSpacing;
             for (let index: number = 1; index <= this.tableSize; index++) {
                 _firstLine += index.toString();
                 if (index.toString().length === 1)
                     _firstLine += _threeSpacing;
                 else if (index.toString().length === 2)
                     _firstLine += _twoSpacing;
+                _horizontalLine += _horizontalDivider;
             }
             this.PrintBoardLine(_firstLine, true);
 
             for (let index: number = 0; index < this.tableSize; index++) {
-
-
                 _secondLine = (index + 1).toString();
                 if (_secondLine.length === 1)
                     _secondLine += _twoSpacing;
@@ -71,6 +72,7 @@ export class BoardProcessor extends Utility.Utils implements IBoardProcessor {
                     this.PrintBoardLine(_secondLine);
                 }
                 this.PrintBoardLine('', true);
+                this.PrintBoardLine(_horizontalLine, true);
             }
         }
         catch (exception) {
