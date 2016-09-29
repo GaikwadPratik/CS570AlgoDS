@@ -54,7 +54,6 @@ export class BoardProcessor extends Utility.Utils implements IBoardProcessor {
                 this.PrintBoardLine(_secondLine);
 
                 for (let innerIndex: number = 0; innerIndex < this.tableSize; innerIndex++) {
-                    if (innerIndex !== this.tableSize)
                         _secondLine = _columnSpace + _verticalDivier;
                     else
                         _secondLine = _columnSpace;
