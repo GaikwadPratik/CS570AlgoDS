@@ -1,5 +1,5 @@
-﻿import fs = require('fs');
-import readline = require('readline');
+﻿import * as fs from 'fs';
+import * as readline from 'readline';
 
 class Program {
     public Main(): void {
@@ -12,6 +12,13 @@ class Program {
 
             //read the contents of the file
             fs.readFile(answer, 'utf8', function (err, contents) {
+
+                if (err)
+                    if (err.code === 'ENOENT')
+                        console.error(err.message);
+                    else
+                        console.error(err);
+
                 console.log('contents of the file are ' + contents);
 
                 let ciphertext: string = contents;
