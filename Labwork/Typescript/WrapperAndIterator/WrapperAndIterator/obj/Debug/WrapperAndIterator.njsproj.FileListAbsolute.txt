@@ -1,0 +1,2 @@
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\Typescript\WrapperAndIterator\WrapperAndIterator\obj\Debug\WrapperAndIterator.njsprojResolveAssemblyReference.cache
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\Typescript\WrapperAndIterator\WrapperAndIterator\bin\Microsoft.NodejsTools.WebRole.dll

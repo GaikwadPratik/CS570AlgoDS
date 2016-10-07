@@ -1,1 +1,11 @@
-{"PlayerMatrix":[["X","",""],["","",""],["","",""]],"PlayerMarker":["O","A","X"],"WinningSequence":1,"WinningCount":3,"BoardSize":3}
+{
+  "PlayerMatrix": [
+    [ "X", "", "" ],
+    [ "", "", "" ],
+    [ "", "", "" ]
+  ],
+  "PlayerMarker": [ "O", "A", "X" ],
+  "WinningSequence": 1,
+  "WinningCount": 3,
+  "BoardSize": 3
+}
