@@ -1,0 +1,6 @@
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\CSharp\WrapperAndIterator\WrapperAndIterator\bin\Debug\WrapperAndIterator.exe.config
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\CSharp\WrapperAndIterator\WrapperAndIterator\obj\Debug\WrapperAndIterator.csprojResolveAssemblyReference.cache
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\CSharp\WrapperAndIterator\WrapperAndIterator\bin\Debug\WrapperAndIterator.exe
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\CSharp\WrapperAndIterator\WrapperAndIterator\bin\Debug\WrapperAndIterator.pdb
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\CSharp\WrapperAndIterator\WrapperAndIterator\obj\Debug\WrapperAndIterator.exe
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\CSharp\WrapperAndIterator\WrapperAndIterator\obj\Debug\WrapperAndIterator.pdb
