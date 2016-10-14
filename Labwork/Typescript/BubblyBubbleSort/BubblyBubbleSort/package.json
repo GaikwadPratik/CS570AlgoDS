@@ -1,0 +1,9 @@
+{
+  "name": "bubbly-bubble-sort",
+  "version": "0.0.0",
+  "description": "BubblyBubbleSort",
+  "main": "app.js",
+  "author": {
+    "name": "Pratik"
+  }
+}
