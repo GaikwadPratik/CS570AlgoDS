@@ -9,7 +9,7 @@ namespace BouncingBubbleSort
 		public static void Main(string[] args)
 		{
 			//List<int> _lst = new List<int>();
-			List<int> _lst = new List<int>() { 1, 6, 5, 9, 3, 7, 2, 1, 12, 0, 4, 100 };
+			List<int> _lst = new List<int>() { 1, 6, 5, 5, 3, 7, 2, 1, 12, 7, 4, 100 };
 			//List<int> _lst = new List<int>() { 15, 5, 25, 1, 10, 4 };
 
 			_lst.ExtendedToString();
@@ -41,7 +41,7 @@ namespace BouncingBubbleSort
 					switch (_direction)
 					{
 						case Direction.Forward:
-							for (int _innerIndex = 0; _innerIndex < len - _outerIndex - 1; _innerIndex++)
+							for (int _innerIndex = 0; _innerIndex < len - 1; _innerIndex++)
 							{
 								if (inArray[_innerIndex] > inArray[_innerIndex + 1])
 								{
@@ -55,7 +55,7 @@ namespace BouncingBubbleSort
 							break;
 
 						case Direction.Reverse:
-							for (int _innerIndex = len - _outerIndex - 1; _innerIndex > 0; _innerIndex--)
+							for (int _innerIndex = len - 1; _innerIndex > 0; _innerIndex--)
 							{
 								if (inArray[_innerIndex - 1] > inArray[_innerIndex])
 								{
