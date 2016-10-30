@@ -4,7 +4,6 @@ Write a program that takes any input text and produces both a frequency table an
 1. Take approximately 360 words from any English document as your input text. Ignore all blanks, all punctuation marks, all special symbols. Create an input file with this input text.<br>
 2. Construct the frequency table according to the input text read from the file, in the form:<br>
 3. <b>The Frequency's MUST be listed, in order, from largest (at the top) to smallest (at the bottom).</b><br>
-
 	a. Only the BELOW Tablet Format will be accepted: Letter Comma Space Percentage Example: A, 2.5%<br>
     b.  <br>
 		symbol frequency<br>
