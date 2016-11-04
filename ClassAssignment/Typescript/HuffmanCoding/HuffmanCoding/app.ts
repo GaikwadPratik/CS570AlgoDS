@@ -70,8 +70,11 @@ class Program {
     private _totalCodeLength = 0;
     //name of the file.
     private _inputFileName: string = "infile.dat";
+    private _outputFileName: string = "outfile.dat";
     //Reg ex to allow only numbers and characters.
     private _regularExpression: RegExp = /[a-zA-Z0-9]/;
+
+    private _readable: fs.ReadStream = null;
 
     public Main(): void {
         try {
@@ -80,11 +83,12 @@ class Program {
             let _selfProgramObject: Program = this;
 
             //compelte file path till the folder
-            let _filePath: string = path.join(__dirname, this._inputFileName);
+            let _inputFilePath: string = path.join(__dirname, this._inputFileName);
+            let _outputFilePath: string = path.join(__dirname, this._outputFileName);
 
             //As per node documentation, instead of checking the existance first, we should directly perform operation and then handle the error within.
             //Open the file directly.
-            fs.open(_filePath, fs.R_OK, (_err: NodeJS.ErrnoException, _fd: number) => {
+            fs.open(_inputFilePath, fs.R_OK, (_err: NodeJS.ErrnoException, _fd: number) => {
                 //in case of an error, handle it
                 if (_err) {
                     if (_err.code === 'ENOENT')
@@ -96,18 +100,20 @@ class Program {
                 else {
                     //instead of reading whole file, we will read it letter by letter.
                     //create the stream to read the input file.
-                    let _readable: fs.ReadStream = fs.createReadStream(_filePath, {
+                    this._readable = fs.createReadStream(_inputFilePath, {
                         encoding: 'utf8',
                         fd: null,
-                    }).on('error', function (error) {
+                    });
+
+                    this._readable.on('error', function (error) {
                         throw error;
                     });
 
                     //https://nodejs.org/api/stream.html#stream_readable_read_size
-                    _readable.on('readable', () => {
+                    this._readable.on('readable', () => {
                         try {
                             let _chunk: string = '';
-                            while (null !== (_chunk = _readable.read(1))) {
+                            while (null !== (_chunk = this._readable.read(1))) {
                                 this.ProcessCharacter(_chunk);//can use this here because it's inside arrow function.
                             }
                         }
@@ -117,18 +123,18 @@ class Program {
                     });
 
                     //once the file read operation is complete process start building graph.
-                    _readable.on('end', function () {
+                    this._readable.on('end', function () {
                         if (this._totalCharacterCount === 0)
-                            console.log(`${this._inputFileName} has no data. Please enter some data`);
+                            console.log(`${this._inputFileName} has no data. Please enter some text`);
                         else {
-                            console.log(`number of letters in the file are ${this._totalCharacterCount}`);
+                            console.log(`number of letters in the file are ${_selfProgramObject._totalCharacterCount}`);
 
                             //Sort the array by the frequency
                             _selfProgramObject._lstHuffmanNodeObjects = _selfProgramObject.SortCollectionInDescending(_selfProgramObject._lstHuffmanNodeObjects);
 
                             //Display the Character with their frequency
-                            _selfProgramObject.DisplayTable();//have to use _selfProgramObject since it's inside anonymous function of event.
-
+                            let _strOutData: string = _selfProgramObject.DisplayTable();//have to use _selfProgramObject since it's inside anonymous function of event.
+                            _strOutData = _strOutData.concat('\n');
                             //generation binary tree in the form of node list
                             _selfProgramObject._lstHuffmanNodeTree = _selfProgramObject._lstHuffmanNodeObjects;
                             _selfProgramObject._nodeRootHuffmanObject = _selfProgramObject.GenerateHuffMannTree();
@@ -138,7 +144,15 @@ class Program {
 
                             //Display the Character with their code
                             _selfProgramObject._lstHuffmanNodeTree = _selfProgramObject.SortCollectionInDescending(_selfProgramObject._lstHuffmanNodeTree);
-                            _selfProgramObject.DisplayBinaryCode();
+                            _strOutData = _strOutData.concat(_selfProgramObject.DisplayBinaryCode());
+                            _strOutData = _strOutData.concat('\n');
+                            _strOutData = _strOutData.concat(_selfProgramObject._totalCodeLength.toString());
+
+                            fs.writeFile(_outputFilePath, _strOutData, (err: NodeJS.ErrnoException) => {
+                                if (err) {
+                                    console.error(err);
+                                }
+                            });
                         }
                     });
                 }
@@ -206,22 +220,43 @@ class Program {
         return _rtnVal;
     }
 
-    private DisplayTable(): void {
-        console.log('symbol\tfrequency');
-        for (let _tempHuffmannObject of this._lstHuffmanNodeObjects) {
-            let _fre: number = _tempHuffmannObject.getFrequency();
-            _fre = ((_fre / this._totalCharacterCount) * 100);
-            console.log(`${_tempHuffmannObject.getCharacter()},\t${Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)}%`);
+    private DisplayTable(): string {
+        let _strRtnVal: string = '';
+        let _strTableHeader: string = 'symbol\tfrequency ';
+        let _strTableString: string = '';
+        console.log(_strTableHeader);
+        try {
+            for (let _tempHuffmannObject of this._lstHuffmanNodeObjects) {
+                let _fre: number = _tempHuffmannObject.getFrequency();
+                _fre = ((_fre / this._totalCharacterCount) * 100);
+                console.log(`${_tempHuffmannObject.getCharacter()},\t${Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)}%`);
+                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter(), ',\t', Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2));
+            }
+            _strRtnVal = _strRtnVal.concat(_strTableHeader, _strTableString);
         }
+        catch (exception) {
+            console.error(`Error while generating frequency table. Error Info ${exception}`);
+        }
+        return _strRtnVal;
     }
 
-    private DisplayBinaryCode(): void {
-        for (let _tempHuffmannObject of this._lstHuffmanNodeTree) {
-            console.log(`${_tempHuffmannObject.getCharacter()},\t${_tempHuffmannObject.getFrequency()},\t${_tempHuffmannObject.getBinaryCode()} `);
-            this._totalCodeLength += this._totalCodeLength + (_tempHuffmannObject.getFrequency() * _tempHuffmannObject.getBinaryCode().length);
+    private DisplayBinaryCode(): string {
+        let _strRtnVal: string = '';
+        let _strTableHeader: string = 'symbol\tHuffman code ';
+        let _strTableString: string = '';
+        try {
+            for (let _tempHuffmannObject of this._lstHuffmanNodeTree) {
+                console.log(`${_tempHuffmannObject.getCharacter()},\t${_tempHuffmannObject.getBinaryCode()} `);
+                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter() + ',\t' + _tempHuffmannObject.getBinaryCode());
+                this._totalCodeLength += (_tempHuffmannObject.getFrequency() * _tempHuffmannObject.getBinaryCode().length);
+            }
+            _strRtnVal = _strRtnVal.concat(_strTableHeader, _strTableString);
         }
-
-        console.log(`Total length of the message is ${this._totalCodeLength} bits`);
+        catch (exception) {
+            console.error(`Error while generating frequency table. Error Info ${exception}`);
+        }
+        //console.log(`Total length of the message is ${this._totalCodeLength} bits`);
+        return _strRtnVal;
     }
 
     private ProcessCharacter(chunkData: string): void {
