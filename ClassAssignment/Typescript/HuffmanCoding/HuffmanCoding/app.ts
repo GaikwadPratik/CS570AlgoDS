@@ -146,7 +146,7 @@ class Program {
                             _selfProgramObject._lstHuffmanNodeTree = _selfProgramObject.SortCollectionInDescending(_selfProgramObject._lstHuffmanNodeTree);
                             _strOutData = _strOutData.concat(_selfProgramObject.DisplayBinaryCode());
                             _strOutData = _strOutData.concat('\n');
-                            _strOutData = _strOutData.concat(_selfProgramObject._totalCodeLength.toString());
+                            _strOutData = _strOutData.concat(`Total number of bits ${_selfProgramObject._totalCodeLength.toString()}`);
 
                             fs.writeFile(_outputFilePath, _strOutData, (err: NodeJS.ErrnoException) => {
                                 if (err) {
@@ -223,14 +223,14 @@ class Program {
     private DisplayTable(): string {
         let _strRtnVal: string = '';
         let _strTableHeader: string = 'symbol\tfrequency ';
-        let _strTableString: string = '';
+        let _strTableString: string = '\n';
         console.log(_strTableHeader);
         try {
             for (let _tempHuffmannObject of this._lstHuffmanNodeObjects) {
                 let _fre: number = _tempHuffmannObject.getFrequency();
                 _fre = ((_fre / this._totalCharacterCount) * 100);
                 console.log(`${_tempHuffmannObject.getCharacter()},\t${Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)}%`);
-                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter(), ',\t', Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2));
+                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter(), ',\t', Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)) + '%\n';
             }
             _strRtnVal = _strRtnVal.concat(_strTableHeader, _strTableString);
         }
@@ -243,11 +243,11 @@ class Program {
     private DisplayBinaryCode(): string {
         let _strRtnVal: string = '';
         let _strTableHeader: string = 'symbol\tHuffman code ';
-        let _strTableString: string = '';
+        let _strTableString: string = '\n';
         try {
             for (let _tempHuffmannObject of this._lstHuffmanNodeTree) {
                 console.log(`${_tempHuffmannObject.getCharacter()},\t${_tempHuffmannObject.getBinaryCode()} `);
-                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter() + ',\t' + _tempHuffmannObject.getBinaryCode());
+                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter() + ',\t' + _tempHuffmannObject.getBinaryCode()) + '\n';
                 this._totalCodeLength += (_tempHuffmannObject.getFrequency() * _tempHuffmannObject.getBinaryCode().length);
             }
             _strRtnVal = _strRtnVal.concat(_strTableHeader, _strTableString);
