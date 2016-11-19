@@ -10,40 +10,40 @@ class HuffmanNodeObject {
         this._leftNode = null;
         this._rightNode = null;
     }
-    getCharacter() {
+    get Character() {
         return this._character;
     }
-    setCharacter(value) {
+    set Character(value) {
         this._character = value;
     }
-    getFrequency() {
+    get Frequency() {
         return this._frequency;
     }
-    setFrequency(value) {
+    set Frequency(value) {
         this._frequency = value;
     }
-    getBinaryCode() {
+    get BinaryCode() {
         return this._binaryCode;
     }
-    setBinaryCode(value) {
+    set BinaryCode(value) {
         this._binaryCode = value;
     }
-    getTotalBits() {
+    get TotalBits() {
         return this._totalBits;
     }
-    setTotaBits(value) {
+    set TotaBits(value) {
         this._totalBits = value;
     }
-    getLeftNode() {
+    get LeftNode() {
         return this._leftNode;
     }
-    setLeftNode(value) {
+    set LeftNode(value) {
         this._leftNode = value;
     }
-    getRightNode() {
+    get RightNode() {
         return this._rightNode;
     }
-    setRightNode(value) {
+    set RightNode(value) {
         this._rightNode = value;
     }
 }
@@ -136,12 +136,12 @@ class Program {
         }
     }
     CreateEncodings(rootObject, binaryCode) {
-        if (rootObject.getLeftNode() !== null) {
-            this.CreateEncodings(rootObject.getLeftNode(), binaryCode + '0');
-            this.CreateEncodings(rootObject.getRightNode(), binaryCode + '1');
+        if (rootObject.LeftNode !== null) {
+            this.CreateEncodings(rootObject.LeftNode, binaryCode + '0');
+            this.CreateEncodings(rootObject.RightNode, binaryCode + '1');
         }
         else {
-            rootObject.setBinaryCode(binaryCode);
+            rootObject.BinaryCode = binaryCode;
             this._lstHuffmanNodeTree.push(rootObject);
         }
     }
@@ -150,15 +150,15 @@ class Program {
         try {
             _rtnVal = huffMannNodeCollection.sort(function (firstNode, secondNode) {
                 try {
-                    if (firstNode.getFrequency() > secondNode.getFrequency())
+                    if (firstNode.Frequency > secondNode.Frequency)
                         return -1;
-                    if (firstNode.getFrequency() < secondNode.getFrequency())
+                    if (firstNode.Frequency < secondNode.Frequency)
                         return 1;
-                    if (firstNode.getFrequency() === secondNode.getFrequency())
+                    if (firstNode.Frequency === secondNode.Frequency)
                         return 0;
                 }
                 catch (exception) {
-                    console.log(`exception ${exception} for ${firstNode.getCharacter()} and ${secondNode.getCharacter()}`);
+                    console.log(`exception ${exception} for ${firstNode.Character} and ${secondNode.Character}`);
                 }
             });
         }
@@ -176,14 +176,14 @@ class Program {
                 _leastFrequencyObject = this._lstHuffmanNodeTree.pop();
                 _secondLeastFrequencyObject = this._lstHuffmanNodeTree.pop();
                 let _newCombinedHuffMannObject = new HuffmanNodeObject();
-                _newCombinedHuffMannObject.setLeftNode(_leastFrequencyObject);
-                _newCombinedHuffMannObject.setRightNode(_secondLeastFrequencyObject);
-                _newCombinedHuffMannObject.setFrequency(_leastFrequencyObject.getFrequency() + _secondLeastFrequencyObject.getFrequency());
+                _newCombinedHuffMannObject.LeftNode = _leastFrequencyObject;
+                _newCombinedHuffMannObject.RightNode = _secondLeastFrequencyObject;
+                _newCombinedHuffMannObject.Frequency = _leastFrequencyObject.Frequency + _secondLeastFrequencyObject.Frequency;
                 this._lstHuffmanNodeTree.push(_newCombinedHuffMannObject);
                 this._lstHuffmanNodeTree = this.SortCollectionInDescending(this._lstHuffmanNodeTree);
             }
             catch (exception) {
-                console.log(`exception ${exception} for ${_leastFrequencyObject.getCharacter()} and ${_secondLeastFrequencyObject.getCharacter()}`);
+                console.log(`exception ${exception} for ${_leastFrequencyObject.Character} and ${_secondLeastFrequencyObject.Character}`);
             }
         }
         _rtnVal = this._lstHuffmanNodeTree.pop();
@@ -196,10 +196,10 @@ class Program {
         console.log(_strTableHeader);
         try {
             for (let _tempHuffmannObject of this._lstHuffmanNodeObjects) {
-                let _fre = _tempHuffmannObject.getFrequency();
+                let _fre = _tempHuffmannObject.Frequency;
                 _fre = ((_fre / this._totalCharacterCount) * 100);
-                console.log(`${_tempHuffmannObject.getCharacter()},\t${Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)}%`);
-                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter(), ',\t', Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)) + '%\n';
+                console.log(`${_tempHuffmannObject.Character},\t${Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)}%`);
+                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.Character, ',\t', Number(Math.round(+(_fre + 'e2')) + 'e-2').toFixed(2)) + '%\n';
             }
             _strRtnVal = _strRtnVal.concat(_strTableHeader, _strTableString);
         }
@@ -214,9 +214,9 @@ class Program {
         let _strTableString = '\n';
         try {
             for (let _tempHuffmannObject of this._lstHuffmanNodeTree) {
-                console.log(`${_tempHuffmannObject.getCharacter()},\t${_tempHuffmannObject.getBinaryCode()} `);
-                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.getCharacter() + ',\t' + _tempHuffmannObject.getBinaryCode()) + '\n';
-                this._totalCodeLength += (_tempHuffmannObject.getFrequency() * _tempHuffmannObject.getBinaryCode().length);
+                console.log(`${_tempHuffmannObject.Character},\t${_tempHuffmannObject.BinaryCode} `);
+                _strTableString = _strTableString.concat(' ' + _tempHuffmannObject.Character + ',\t' + _tempHuffmannObject.BinaryCode) + '\n';
+                this._totalCodeLength += (_tempHuffmannObject.Frequency * _tempHuffmannObject.BinaryCode.length);
             }
             _strRtnVal = _strRtnVal.concat(_strTableHeader, _strTableString);
         }
@@ -234,21 +234,21 @@ class Program {
             if (typeof (this._lstHuffmanNodeObjects) === 'undefined' || this._lstHuffmanNodeObjects === null)
                 this._lstHuffmanNodeObjects = new Array();
             //look up if the character is already present in the array.
-            let _existingObject = this._lstHuffmanNodeObjects.find(x => x.getCharacter() === chunkData);
+            let _existingObject = this._lstHuffmanNodeObjects.find(x => x.Character === chunkData);
             if (typeof (_existingObject) === 'undefined' || _existingObject === null) {
                 //if not then add it up
                 _existingObject = new HuffmanNodeObject();
-                _existingObject.setCharacter(chunkData);
-                _existingObject.setFrequency(1);
+                _existingObject.Character = chunkData;
+                _existingObject.Frequency = 1;
                 this._lstHuffmanNodeObjects.push(_existingObject);
             }
             else {
                 //if present increment the frequency 
                 let _position = this._lstHuffmanNodeObjects.findIndex(x => x === _existingObject);
                 //get the original frequency
-                let _originalFrequency = _existingObject.getFrequency();
+                let _originalFrequency = _existingObject.Frequency;
                 //Increment the frequency
-                _existingObject.setFrequency(++_originalFrequency);
+                _existingObject.Frequency = ++_originalFrequency;
                 //Update the object in collection
                 this._lstHuffmanNodeObjects[_position] = _existingObject;
             }
