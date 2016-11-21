@@ -8,9 +8,9 @@
 <colgroup> <col width="100"> <col width="100"> <col width="100"> </colgroup>
 <tbody>
 <tr>
-<td data-sheets-value='{"1":2,"2":"Company"}'>Company</td>
-<td data-sheets-value='{"1":2,"2":"Hit Count"}'>Hit Count</td>
-<td data-sheets-value='{"1":2,"2":"Relevance"}'>Relevance</td>
+<td data-sheets-value='{"1":2,"2":"Company"}'><strong>Company</strong></td>
+<td data-sheets-value='{"1":2,"2":"Hit Count"}'><strong>Hit Count</strong></td>
+<td data-sheets-value='{"1":2,"2":"Relevance"}'><strong>Relevance</strong></td>
 </tr>
 <tr>
 <td data-sheets-value='{"1":2,"2":"Microsoft "}'>Microsoft</td>

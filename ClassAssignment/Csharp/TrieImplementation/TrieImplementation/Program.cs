@@ -73,7 +73,7 @@ namespace TrieImplementation
                             bool _bIncrementFrequency = false;
 
                             string _strInArticle = string.Empty;
-
+                            //To increase the buffer size of the console
                             using (Stream inputStream = Console.OpenStandardInput(READLINE_BUFFER_SIZE))
                             {
                                 byte[] bytes = new byte[READLINE_BUFFER_SIZE];
