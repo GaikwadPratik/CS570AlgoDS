@@ -12,11 +12,6 @@
 <td data-sheets-value='{"1":2,"2":"Hit Count"}'>Hit Count</td>
 <td data-sheets-value='{"1":2,"2":"Relevance"}'>Relevance</td>
 </tr>
-</tbody>
-</table>
-<table dir="ltr" border="1" cellspacing="0" cellpadding="0">
-<colgroup> <col width="100"> <col width="100"> <col width="100"> </colgroup>
-<tbody>
 <tr>
 <td data-sheets-value='{"1":2,"2":"Microsoft "}'>Microsoft</td>
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":2}'>6</td>
@@ -32,21 +27,11 @@
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":2}'>2</td>
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":0.0138889}' data-sheets-numberformat='[null,3,"0.00000%"]'>2.38889%</td>
 </tr>
-</tbody>
-</table>
-<table dir="ltr" border="1" cellspacing="0" cellpadding="0">
-<colgroup> <col width="100"> <col width="100"> <col width="100"> </colgroup>
-<tbody>
 <tr>
 <td style="text-align: center;" data-sheets-value='{"1":2,"2":"Accenture"}'><strong>Total </strong></td>
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":1}'><strong>12</strong></td>
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":0.00694444}' data-sheets-numberformat='[null,3,"0.000000%"]'><strong>10%</strong></td>
 </tr>
-</tbody>
-</table>
-<table dir="ltr" style="height: 20px;" border="1" width="304" cellspacing="0" cellpadding="0">
-<colgroup> <col width="100"> <col width="100"> </colgroup>
-<tbody>
 <tr>
 <td style="text-align: center;" data-sheets-value='{"1":2,"2":"Accenture"}'><strong>Total Words</strong></td>
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":1}'><strong>120</strong></td>
