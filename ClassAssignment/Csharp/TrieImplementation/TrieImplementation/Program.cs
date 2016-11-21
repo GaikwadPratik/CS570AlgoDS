@@ -157,10 +157,10 @@ namespace TrieImplementation
                             foreach (CompanyNodes item in _lstParentNodes)
                             {
                                 _nHitCount += item.Frequency;
-                                Console.WriteLine($"{item.Name}{_spaces.Remove(_spaces.Length - item.Name.Length)}\t\t{item.Frequency}\t\t{((double)item.Frequency / _nTotalWordCound) * 100}");
+                                Console.WriteLine($"{item.Name}{_spaces.Remove(_spaces.Length - item.Name.Length)}\t\t{item.Frequency}\t\t{((double)item.Frequency / _nTotalWordCound) * 100}%");
                             }
                             Console.WriteLine();
-                            Console.WriteLine($"Total{_spaces}\t\t{_nHitCount}\t\t{((double)_nHitCount / _nTotalWordCound) * 100}");
+                            Console.WriteLine($"Total{_spaces}\t\t{_nHitCount}\t\t{((double)_nHitCount / _nTotalWordCound) * 100}%");
                             Console.WriteLine($"Total Words{_spaces}\t{_nTotalWordCound}");
                         }
                         else
