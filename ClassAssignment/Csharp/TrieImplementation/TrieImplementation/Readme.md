@@ -35,6 +35,7 @@
 <tr>
 <td style="text-align: center;" data-sheets-value='{"1":2,"2":"Accenture"}'><strong>Total Words</strong></td>
 <td style="text-align: center;" data-sheets-value='{"1":3,"3":1}'><strong>120</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>
