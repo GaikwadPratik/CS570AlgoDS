@@ -91,9 +91,11 @@ namespace TrieImplementation
                                 }
                             }
                             _strInArticle = _lastLine.Replace(_strInArticle, " ");
-                            string[] _strArticleWords = _strInArticle.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            string[] _strArticleWords = _strInArticle.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                             if (_strArticleWords.Length > 0)
                             {
+                                string _strLastString = _strArticleWords.Last();
+
                                 //1. Create the list of strings
                                 //2. search the string in trie
                                 //3. if found add to the list
@@ -104,14 +106,24 @@ namespace TrieImplementation
 
                                 foreach (string _strArticleWord in _strArticleWords)
                                 {
+                                    bool _bLastWord = false;
+
+                                    if (ReferenceEquals(_strLastString, _strArticleWord))
+                                        _bLastWord = true;
                                     string _strFlattenedArticleWord = _flattenNames.Replace(_strArticleWord, string.Empty);
+                                    
                                     string _strCurrentWord = _strFlattenedArticleWord;
                                     if (_lstFoundWords.Count > 0)
                                         _strFlattenedArticleWord = string.Format($"{ string.Join(" ", _lstFoundWords)} {_strFlattenedArticleWord}").Trim();
 
                                     _nTotalWordCound++;
-                                    if (_trie.ContainsWord(_strFlattenedArticleWord))
-                                        _lstFoundWords.Add(_strCurrentWord);
+                                    if (_trie.ContainsWord(_strFlattenedArticleWord) && !string.IsNullOrEmpty(_strCurrentWord))
+                                    {
+                                        if (!_bLastWord)
+                                            _lstFoundWords.Add(_strCurrentWord);
+                                        else
+                                            IncrementFrequency(_lstNodes, _lstFoundWords, _strFlattenedArticleWord);
+                                    }
                                     else
                                     {
                                         if (!_lstExclusion.Contains(_strCurrentWord))
@@ -121,18 +133,7 @@ namespace TrieImplementation
 
                                         if (!string.IsNullOrEmpty(_strFlattenedArticleWord) && _bIncrementFrequency)
                                         {
-                                            _lstFoundWords.Clear();
-                                            var obj = _lstNodes.FirstOrDefault(x => x.Name.Equals(_strFlattenedArticleWord));
-                                            if (obj != null)
-                                            {
-                                                obj.Frequency += 1;
-                                                //increment the frequency of the parent
-                                                if (!string.IsNullOrEmpty(obj.ParentName))
-                                                {
-                                                    obj = _lstNodes.FirstOrDefault(x => x.Name.Equals(obj.ParentName));
-                                                    obj.Frequency += 1;
-                                                }
-                                            }
+                                            IncrementFrequency(_lstNodes, _lstFoundWords, _strFlattenedArticleWord);
                                             _bIncrementFrequency = false;
                                         }
 
@@ -142,8 +143,11 @@ namespace TrieImplementation
                                             && !_strFlattenedArticleWord.Equals(_strCurrentWord))
                                         {
                                             _strFlattenedArticleWord = _strCurrentWord;
-                                            if (_trie.ContainsWord(_strFlattenedArticleWord))
-                                                _lstFoundWords.Add(_strFlattenedArticleWord);
+                                            if (!_bLastWord)
+                                                _lstFoundWords.Add(_strCurrentWord);
+                                            else
+                                                IncrementFrequency(_lstNodes, _lstFoundWords, _strFlattenedArticleWord);
+
                                         }
                                     }
                                 }
@@ -175,6 +179,22 @@ namespace TrieImplementation
             else
                 Console.WriteLine($"'{_strCompaniesFileName}' file not found.");
             Console.ReadKey();
+        }
+
+        private static void IncrementFrequency(List<CompanyNodes> _lstNodes, List<string> _lstFoundWords, string _strFlattenedArticleWord)
+        {
+            _lstFoundWords.Clear();
+            var obj = _lstNodes.FirstOrDefault(x => x.Name.Equals(_strFlattenedArticleWord));
+            if (obj != null)
+            {
+                obj.Frequency += 1;
+                //increment the frequency of the parent
+                if (!string.IsNullOrEmpty(obj.ParentName))
+                {
+                    obj = _lstNodes.FirstOrDefault(x => x.Name.Equals(obj.ParentName));
+                    obj.Frequency += 1;
+                }
+            }
         }
 
         private static void TestTrie()
