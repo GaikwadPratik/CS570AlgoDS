@@ -1,0 +1,12 @@
+{
+  "name": "sorted-binary-search-tree",
+  "version": "0.0.0",
+  "description": "SortedBinarySearchTree",
+  "main": "app.js",
+  "author": {
+    "name": "pratik"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.5"
+  }
+}

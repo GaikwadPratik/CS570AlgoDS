@@ -1,0 +1,7 @@
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/bin/Debug/BouncingBubbleSort.exe.config
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/bin/Debug/BouncingBubbleSort.exe.mdb
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/bin/Debug/BouncingBubbleSort.exe
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/obj/x86/Debug/BouncingBubbleSort.exe
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/obj/x86/Debug/BouncingBubbleSort.exe.mdb
+/home/pratik/Projects/BouncingBubbleSort/BouncingBubbleSort/bin/Debug/LogUtils.dll

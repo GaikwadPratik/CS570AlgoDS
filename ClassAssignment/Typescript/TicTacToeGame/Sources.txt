@@ -1,0 +1,2 @@
+https://github.com/electricessence/TypeScript.NET
+https://github.com/anseki/readline-sync#basic_options

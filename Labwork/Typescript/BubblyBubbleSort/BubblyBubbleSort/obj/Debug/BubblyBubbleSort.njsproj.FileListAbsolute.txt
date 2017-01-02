@@ -1,0 +1,2 @@
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\Typescript\BubblyBubbleSort\BubblyBubbleSort\obj\Debug\BubblyBubbleSort.njsprojResolveAssemblyReference.cache
+C:\Pratik\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\Labwork\Typescript\BubblyBubbleSort\BubblyBubbleSort\bin\Microsoft.NodejsTools.WebRole.dll

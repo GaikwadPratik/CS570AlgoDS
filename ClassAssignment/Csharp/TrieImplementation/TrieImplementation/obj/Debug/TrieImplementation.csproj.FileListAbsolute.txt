@@ -1,0 +1,1 @@
+D:\Fall 2016\CourseMaterial\CS570\Code\CS570AlgoDS\ClassAssignment\Csharp\TrieImplementation\TrieImplementation\bin\Debug\TrieImplementation.exe.config

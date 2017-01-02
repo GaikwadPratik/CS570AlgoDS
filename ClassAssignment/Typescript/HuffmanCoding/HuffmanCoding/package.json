@@ -1,0 +1,9 @@
+{
+  "name": "huffman-coding",
+  "version": "0.0.0",
+  "description": "HuffmanCoding",
+  "main": "app.js",
+  "author": {
+    "name": "Pratik"
+  }
+}

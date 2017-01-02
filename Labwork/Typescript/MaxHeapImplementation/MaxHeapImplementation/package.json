@@ -1,0 +1,12 @@
+{
+  "name": "max-heap-implementation",
+  "version": "0.0.0",
+  "description": "MaxHeapImplementation",
+  "main": "app.js",
+  "author": {
+    "name": "Pratik"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.4"
+  }
+}
